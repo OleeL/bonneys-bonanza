@@ -1,5 +1,5 @@
 import { app, BrowserWindow } from 'electron';
-import * as path from 'path';
+import { join } from 'path';
 
 // Let electron reloads by itself
 if (process.env.ELECTRON_DEBUG === 'true' || process.env.ELECTRON_DEBUG === 'vscode') {
@@ -20,7 +20,7 @@ function createWindow() {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  mainWindow.loadFile(join(__dirname, 'index.html'));
 
   if (process.env.ELECTRON_DEBUG === 'true') {
     // Open the DevTools.
