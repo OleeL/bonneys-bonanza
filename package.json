@@ -25,6 +25,7 @@
 	},
 	"license": "MIT",
 	"dependencies": {
+		"@graph-ts/vector2": "^1.3.0",
 		"phaser": "^3.55.2"
 	},
 	"devDependencies": {

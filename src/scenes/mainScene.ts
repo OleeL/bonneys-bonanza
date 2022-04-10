@@ -1,10 +1,11 @@
 import 'phaser';
-
 import phaserPng from '../assets/phaser.png';
 import { Player } from '../entities/player';
+import keyboardBindings from '../keyboardBindings';
 
-export class MainScene extends Phaser.Scene {
-    private image!: Phaser.GameObjects.Image;
+export default class MainScene extends Phaser.Scene {
+    public image!: Phaser.GameObjects.Image;
+    public player!: Player;
 
     constructor() {
         super({ key: 'MainScene' });
@@ -15,20 +16,12 @@ export class MainScene extends Phaser.Scene {
     }
 
     public create = () => {
-        new Player(this);
+        this.player = new Player(this);
         this.image = this.add.image(400, 300, 'phaser');
+        keyboardBindings(this);
+    }
 
-        this.input.on('pointerdown', (event: any) => {
-            const { x, y } = event;
-            this.image.x = x;
-            this.image.y = y;
-        });
-
-        this.input.on('pointermove', (event: any) => {
-
-            const { x, y } = event;
-            this.image.x = x;
-            this.image.y = y;
-        });
+    public update = (t: number, dt: number) => {
+        //console.log(t, dt);
     }
 }

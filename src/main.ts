@@ -11,7 +11,7 @@ if (process.env.ELECTRON_DEBUG === 'true' || process.env.ELECTRON_DEBUG === 'vsc
 
 let mainWindow: Electron.BrowserWindow | null;
 
-function createWindow() {
+const createWindow = () => {
     // Create the browser window.
     mainWindow = new BrowserWindow({
         width: 1400,
