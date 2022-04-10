@@ -27,10 +27,6 @@ export class MainScene extends Phaser.Scene {
             const { x, y } = event;
             this.image.x = x;
             this.image.y = y;
-
-            console.log(event);
-
-            console.log("test", x, y);
         });
     }
 }
