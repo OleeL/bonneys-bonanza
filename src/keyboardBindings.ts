@@ -6,9 +6,7 @@ import MainScene from './scenes/mainScene';
 export default (scene: MainScene) => {
 
     scene.input.on('pointerdown', (event: Phaser.Input.Pointer) => {
-        const { x, y } = event;
-        scene.image.x = x;
-        scene.image.y = y;
+
     });
     scene.input.on('pointermove', (event: Phaser.Input.Pointer) => {
         // const { x, y } = event;
