@@ -16,7 +16,7 @@ export default (scene: MainScene) => {
         // this.image.y = y;
         scene.player.onMouseMove(event);
     });
-    scene.input.keyboard.on('keydown', (event: KeyboardEvent) => {
-        scene.player.onKeyboardMove(event);
-    });
+    // scene.input.keyboard.on('keydown', (event: KeyboardEvent) => {
+    //     scene.player.onKeyboardMove(event);
+    // });
 }

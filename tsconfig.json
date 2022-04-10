@@ -1,19 +1,11 @@
 {
-	"compilerOptions": {
-		"target": "ES6",
-		"module": "es6",
-		"types": [
-			"node",
-			"electron"
-		],
-		"strict": true,
-		"typeRoots": [
-			"./typings",
-			"./node_modules/"
-		],
-	},
-	"include": [
-		"src/**/*.ts",
-		"typings/**/*.d.ts"
-	]
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "es6",
+    "moduleResolution": "node",
+    "types": ["node", "electron"],
+    "strict": true,
+    "typeRoots": ["./typings", "./node_modules/"]
+  },
+  "include": ["src/**/*.ts", "typings/**/*.d.ts"]
 }
