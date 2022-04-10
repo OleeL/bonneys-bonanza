@@ -1,16 +1,19 @@
 {
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "es2022",
-
-    "strict": true,
-    "typeRoots": [
-      "./typings",
-      "./node_modules/"
-    ],
-  },
-  "include": [
-    "src/**/*.ts",
-    "typings/**/*.d.ts"
-  ]
+	"compilerOptions": {
+		"target": "ES6",
+		"module": "es6",
+		"types": [
+			"node",
+			"electron"
+		],
+		"strict": true,
+		"typeRoots": [
+			"./typings",
+			"./node_modules/"
+		],
+	},
+	"include": [
+		"src/**/*.ts",
+		"typings/**/*.d.ts"
+	]
 }
