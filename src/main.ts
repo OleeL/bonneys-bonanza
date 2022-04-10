@@ -1,13 +1,12 @@
 import { app, BrowserWindow } from 'electron';
 import { join } from 'path';
 
-
-console.log(process ?? "process was null")
-
 // Let electron reloads by itself
 if (process.env.ELECTRON_DEBUG === 'true' || process.env.ELECTRON_DEBUG === 'vscode') {
     // tslint:disable-next-line:no-var-requires
-    require('electron-reload')(__dirname);
+    require('electron-reload')(__dirname, {
+        electron: join(process.cwd(), 'node_modules', '.bin', 'electron.cmd')
+    })
 }
 
 let mainWindow: Electron.BrowserWindow | null;
