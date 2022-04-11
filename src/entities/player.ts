@@ -1,15 +1,10 @@
 import 'phaser';
 import { Crosshair } from '../hud/crosshair';
 import Wizard from '../assets';
+import { checkDirection, MovementSettings } from '../keyboardBindings';
+import { Entity } from './entity';
 
 const nameof = <T>(name: Extract<keyof T, string>): string => name;
-
-interface MovementSettings {
-    Name: string;
-    Keys: number[];
-    Textures: string[];
-    Math: (player: Player) => void;
-}
 
 const Movement: MovementSettings[] = [
     {
@@ -38,23 +33,21 @@ const Movement: MovementSettings[] = [
     },
 ]
 
-export class Player extends Phaser.GameObjects.GameObject {
+export class Player extends Entity {
     private crosshair!: Crosshair;
     public sprite!: Phaser.GameObjects.Image;
-    private _velocity!: number;
-    private interval: number = 50;
+    public get interval(): number {
+        return this._interval;
+    }
 
     public get velocity(): number {
         return this._velocity;
     }
 
-    private tickCount: number;
-
     constructor(scene: Phaser.Scene) {
         super(scene, "sprite");
         this.crosshair = new Crosshair(scene);
         this._velocity = 0.4;
-        this.tickCount = 0;
 
         // Create listeners for all keys created in movement
         Movement.forEach(direction => {
@@ -82,27 +75,7 @@ export class Player extends Phaser.GameObjects.GameObject {
     }
 
     public update = (t: number, dt: number) => {
-        this.tickCount = (this.tickCount + 1) % this.interval;
-
         // Check if every key that has been added to movement has been pressed.
-        Movement.forEach(direction => this.checkDirection(direction));
-    }
-
-    private keyFinder = (key: Phaser.Input.Keyboard.Key, keys: number[]) =>
-        keys.includes(key.keyCode) && key.isDown;
-
-    private checkDirection = (movement: MovementSettings) => {
-        if (this.scene.input.keyboard.keys.some(x => this.keyFinder(x, movement.Keys))) {
-            movement.Math(this);
-            const textures = movement.Textures;
-            for (let i = textures.length - 1; i >= 0; i--) {
-                const thisSection = i * (this.interval / textures.length);
-                if (this.tickCount > thisSection) {
-                    this.sprite.setTexture(textures[i]);
-                    return true;
-                }
-            }
-        }
-        return false;
+        Movement.forEach(direction => checkDirection(this, direction, t));
     }
 }
