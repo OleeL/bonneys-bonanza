@@ -13,7 +13,7 @@ const Movement: IMovementSettings[] = [
         isDown: true,
         Keys: [Phaser.Input.Keyboard.KeyCodes.SHIFT],
         Textures: [],
-        Math: (player) => {
+        Math: (player, t, dt) => {
             (player as Player).setSprint();
         }
     },
@@ -22,7 +22,7 @@ const Movement: IMovementSettings[] = [
         isDown: false,
         Keys: [Phaser.Input.Keyboard.KeyCodes.SHIFT],
         Textures: [],
-        Math: (player) => {
+        Math: (player, t, dt) => {
             (player as Player).setWalk();
         }
     },
@@ -31,28 +31,28 @@ const Movement: IMovementSettings[] = [
         isDown: true,
         Keys: [Phaser.Input.Keyboard.KeyCodes.S, Phaser.Input.Keyboard.KeyCodes.DOWN],
         Textures: [Wizard.Down],
-        Math: (player) => player.sprite.y += player.velocity
+        Math: (player, t, dt) => player.sprite.y += player.velocity * dt
     },
     {
         Name: "Left",
         isDown: true,
         Keys: [Phaser.Input.Keyboard.KeyCodes.A, Phaser.Input.Keyboard.KeyCodes.LEFT],
         Textures: [Wizard.Left, Wizard.LeftAlt],
-        Math: (player) => player.sprite.x -= player.velocity
+        Math: (player, t, dt) => player.sprite.x -= player.velocity * dt
     },
     {
         Name: "Right",
         isDown: true,
         Keys: [Phaser.Input.Keyboard.KeyCodes.D, Phaser.Input.Keyboard.KeyCodes.RIGHT],
         Textures: [Wizard.Right, Wizard.RightAlt],
-        Math: (player) => player.sprite.x += player.velocity
+        Math: (player, t, dt) => player.sprite.x += player.velocity * dt
     },
     {
         Name: "Up",
         isDown: true,
         Keys: [Phaser.Input.Keyboard.KeyCodes.W, Phaser.Input.Keyboard.KeyCodes.UP],
         Textures: [Wizard.Up],
-        Math: (player) => player.sprite.y -= player.velocity
+        Math: (player, t, dt) => player.sprite.y -= player.velocity * dt
     },
 ]
 
@@ -67,8 +67,8 @@ export class Player extends Entity {
         return this._velocity;
     }
 
-    private _sprintSpeed: number = 0.9;
-    private _walkSpeed: number = 0.4;
+    private _sprintSpeed: number = 0.5;
+    private _walkSpeed: number = 0.2;
 
     public setSprint = () => {
         this._velocity = this._sprintSpeed;
@@ -111,6 +111,6 @@ export class Player extends Entity {
 
     public update = (t: number, dt: number) => {
         // Check if every key that has been added to movement has been pressed.
-        Movement.forEach(direction => checkDirection(this, direction, t));
+        Movement.forEach(direction => checkDirection(this, direction, t, dt));
     }
 }

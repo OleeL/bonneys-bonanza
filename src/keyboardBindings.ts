@@ -12,15 +12,15 @@ export interface IMovementSettings {
     isDown: boolean;
     Keys: number[];
     Textures: string[];
-    Math: (entity: Entity) => void;
+    Math: (entity: Entity, t: number, dt: number) => void;
 }
 
 const keyFinder = (key: Phaser.Input.Keyboard.Key, movement: IMovementSettings) =>
     movement.Keys.includes(key.keyCode) && (movement.isDown ? key.isDown : key.isUp);
 
-export const checkDirection = (entity: Entity, movement: IMovementSettings, t: number) => {
+export const checkDirection = (entity: Entity, movement: IMovementSettings, t: number, dt: number) => {
     if (entity.scene.input.keyboard.keys.some(x => keyFinder(x, movement))) {
-        movement.Math(entity);
+        movement.Math(entity, t, dt);
         const textures = movement.Textures;
         for (let i = textures.length - 1; i >= 0; i--) {
             const thisSection = i * (entity.interval / textures.length);
