@@ -57,21 +57,20 @@ export class Player extends Phaser.GameObjects.GameObject {
         this.tickCount = 0;
 
         // Create listeners for all keys created in movement
-        Object.keys(Movement).forEach(x => {
-            //@ts-ignore
-            Movement[x].Keys.forEach(key => {
+        Movement.forEach(direction => {
+            direction.Keys.forEach(key => {
                 this.scene.input.keyboard.addKey(key);
             });
         });
     }
 
     public preload = () => {
-        this.scene.load.image(nameof(Wizard.Down), Wizard.Down);
-        this.scene.load.image(nameof(Wizard.Right), Wizard.Right);
-        this.scene.load.image(nameof(Wizard.RightAlt), Wizard.RightAlt);
-        this.scene.load.image(nameof(Wizard.Left), Wizard.Left);
-        this.scene.load.image(nameof(Wizard.LeftAlt), Wizard.LeftAlt);
-        this.scene.load.image(nameof(Wizard.RightAttack), Wizard.RightAttack);
+
+        const loadImage = (fileName: string) => {
+            this.scene.load.image(nameof(fileName), fileName);
+        }
+
+        Object.values(Wizard).forEach(x=>loadImage(x));
     }
 
     public create = () => {
@@ -86,8 +85,7 @@ export class Player extends Phaser.GameObjects.GameObject {
         this.tickCount = (this.tickCount + 1) % this.interval;
 
         // Check if every key that has been added to movement has been pressed.
-        //@ts-ignore
-        Object.keys(Movement).forEach(x => this.checkDirection(Movement[x]));
+        Movement.forEach(direction => this.checkDirection(direction));
     }
 
     private keyFinder = (key: Phaser.Input.Keyboard.Key, keys: number[]) =>
