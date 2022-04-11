@@ -1,30 +1,33 @@
 import 'phaser';
-import { Player } from './entities/player';
+import { Entity } from './entities/entity';
 import MainScene from './scenes/mainScene';
 
 // https://rexrainbow.github.io/phaser3-rex-notes/docs/site/touchevents/
 // https://rexrainbow.github.io/phaser3-rex-notes/docs/site/keyboardevents/
 
-export interface MovementSettings {
+export interface IMovementSettings {
+    // Just useful for debugging
     Name: string;
+    // Is down => True, Is up => false
+    isDown: boolean;
     Keys: number[];
     Textures: string[];
-    Math: (player: Player) => void;
+    Math: (entity: Entity) => void;
 }
 
-const keyFinder = (key: Phaser.Input.Keyboard.Key, keys: number[]) =>
-    keys.includes(key.keyCode) && key.isDown;
+const keyFinder = (key: Phaser.Input.Keyboard.Key, movement: IMovementSettings) =>
+    movement.Keys.includes(key.keyCode) && (movement.isDown ? key.isDown : key.isUp);
 
-export const checkDirection = (player: Player, movement: MovementSettings, t: number) => {
-    if (player.scene.input.keyboard.keys.some(x => keyFinder(x, movement.Keys))) {
-        movement.Math(player);
+export const checkDirection = (entity: Entity, movement: IMovementSettings, t: number) => {
+    if (entity.scene.input.keyboard.keys.some(x => keyFinder(x, movement))) {
+        movement.Math(entity);
         const textures = movement.Textures;
         for (let i = textures.length - 1; i >= 0; i--) {
-            const thisSection = i * (player.interval / textures.length);
-            const tickCount = t % player.interval;
+            const thisSection = i * (entity.interval / textures.length);
+            const tickCount = t % entity.interval;
 
             if (tickCount > thisSection) {
-                player.sprite.setTexture(textures[i]);
+                entity.sprite.setTexture(textures[i]);
                 return true;
             }
         }
@@ -38,12 +41,9 @@ export default (scene: MainScene) => {
 
     });
     scene.input.on('pointermove', (event: Phaser.Input.Pointer) => {
-        // const { x, y } = event;
-        // this.image.x = x;
-        // this.image.y = y;
         scene.player.onMouseMove(event);
     });
     // scene.input.keyboard.on('keydown', (event: KeyboardEvent) => {
-    //     scene.player.onKeyboardMove(event);
+    //     scene.entity.onKeyboardMove(event);
     // });
 }

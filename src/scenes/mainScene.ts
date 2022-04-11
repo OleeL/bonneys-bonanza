@@ -1,6 +1,7 @@
 import 'phaser';
 import { Player } from '../entities/player';
 import keyboardBindings from '../keyboardBindings';
+import * as Fire from '../emitters/fire';
 
 export default class MainScene extends Phaser.Scene {
     public image!: Phaser.GameObjects.Image;
@@ -13,15 +14,16 @@ export default class MainScene extends Phaser.Scene {
     public preload = () => {
         this.player = new Player(this);
         this.player.preload();
+        Fire.preload(this);
     }
 
     public create = () => {
         this.player.create();
         keyboardBindings(this);
+        Fire.create(this);
     }
 
     public update = (t: number, dt: number) => {
         this.player.update(t, dt);
-        //console.log(t, dt);
     }
 }

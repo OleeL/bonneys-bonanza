@@ -1,32 +1,55 @@
 import 'phaser';
 import { Crosshair } from '../hud/crosshair';
 import Wizard from '../assets';
-import { checkDirection, MovementSettings } from '../keyboardBindings';
+import { checkDirection, IMovementSettings } from '../keyboardBindings';
 import { Entity } from './entity';
 
 const nameof = <T>(name: Extract<keyof T, string>): string => name;
 
-const Movement: MovementSettings[] = [
+//
+const Movement: IMovementSettings[] = [
+    {
+        Name: "Sprint",
+        isDown: true,
+        Keys: [Phaser.Input.Keyboard.KeyCodes.SHIFT],
+        Textures: [],
+        Math: (player) => {
+            (player as Player).setSprint();
+        }
+    },
+    {
+        Name: "Sprint",
+        isDown: false,
+        Keys: [Phaser.Input.Keyboard.KeyCodes.SHIFT],
+        Textures: [],
+        Math: (player) => {
+            (player as Player).setWalk();
+        }
+    },
     {
         Name: "Down",
+        isDown: true,
         Keys: [Phaser.Input.Keyboard.KeyCodes.S, Phaser.Input.Keyboard.KeyCodes.DOWN],
         Textures: [Wizard.Down],
         Math: (player) => player.sprite.y += player.velocity
     },
     {
         Name: "Left",
+        isDown: true,
         Keys: [Phaser.Input.Keyboard.KeyCodes.A, Phaser.Input.Keyboard.KeyCodes.LEFT],
         Textures: [Wizard.Left, Wizard.LeftAlt],
         Math: (player) => player.sprite.x -= player.velocity
     },
     {
         Name: "Right",
+        isDown: true,
         Keys: [Phaser.Input.Keyboard.KeyCodes.D, Phaser.Input.Keyboard.KeyCodes.RIGHT],
         Textures: [Wizard.Right, Wizard.RightAlt],
         Math: (player) => player.sprite.x += player.velocity
     },
     {
         Name: "Up",
+        isDown: true,
         Keys: [Phaser.Input.Keyboard.KeyCodes.W, Phaser.Input.Keyboard.KeyCodes.UP],
         Textures: [Wizard.Up],
         Math: (player) => player.sprite.y -= player.velocity
@@ -44,10 +67,22 @@ export class Player extends Entity {
         return this._velocity;
     }
 
+    private _sprintSpeed: number = 0.9;
+    private _walkSpeed: number = 0.4;
+
+    public setSprint = () => {
+        this._velocity = this._sprintSpeed;
+        this._interval = this._initialInterval * 0.6;
+    }
+    public setWalk = () => {
+        this._velocity = this._walkSpeed;
+        this._interval = this._initialInterval;
+    }
+
     constructor(scene: Phaser.Scene) {
         super(scene, "sprite");
         this.crosshair = new Crosshair(scene);
-        this._velocity = 0.4;
+        this._velocity = this._walkSpeed;
 
         // Create listeners for all keys created in movement
         Movement.forEach(direction => {
@@ -63,7 +98,7 @@ export class Player extends Entity {
             this.scene.load.image(nameof(fileName), fileName);
         }
 
-        Object.values(Wizard).forEach(x=>loadImage(x));
+        Object.values(Wizard).forEach(x => loadImage(x));
     }
 
     public create = () => {

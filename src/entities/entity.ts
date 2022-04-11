@@ -1,12 +1,10 @@
 import 'phaser';
-import { checkDirection } from '../keyboardBindings';
-
-const nameof = <T>(name: Extract<keyof T, string>): string => name;
 
 export class Entity extends Phaser.GameObjects.GameObject {
-    public sprite!: Phaser.GameObjects.Image;
+    public readonly sprite!: Phaser.GameObjects.Image;
     protected _velocity!: number;
     protected _interval: number = 250;
+    protected readonly _initialInterval: number = 250;
     public get interval(): number {
         return this._interval;
     }

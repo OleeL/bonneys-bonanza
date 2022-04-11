@@ -4,6 +4,8 @@
     "module": "es6",
     "moduleResolution": "node",
     "types": ["node", "electron"],
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
     "strict": true,
     "typeRoots": ["./typings", "./node_modules/"]
   },
