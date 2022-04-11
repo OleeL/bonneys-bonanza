@@ -66,12 +66,9 @@ export class Player extends Phaser.GameObjects.GameObject {
     }
 
     public preload = () => {
-        this.scene.load.image(nameof(Wizard.Down), Wizard.Down);
-        this.scene.load.image(nameof(Wizard.Right), Wizard.Right);
-        this.scene.load.image(nameof(Wizard.RightAlt), Wizard.RightAlt);
-        this.scene.load.image(nameof(Wizard.Left), Wizard.Left);
-        this.scene.load.image(nameof(Wizard.LeftAlt), Wizard.LeftAlt);
-        this.scene.load.image(nameof(Wizard.RightAttack), Wizard.RightAttack);
+        Object.entries(Wizard).forEach(([key, value]) => {
+            this.scene.load.image(value, value);
+        })
     }
 
     public create = () => {
