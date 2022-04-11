@@ -28,7 +28,7 @@ const Movement: MovementSettings[] = [
     {
         Name: "Up",
         Keys: [Phaser.Input.Keyboard.KeyCodes.W, Phaser.Input.Keyboard.KeyCodes.UP],
-        Textures: [Wizard.Down],
+        Textures: [Wizard.Up],
         Math: (player) => player.sprite.y -= player.velocity
     },
 ]
