@@ -11,6 +11,8 @@ if (process.env.ELECTRON_DEBUG === 'true' || process.env.ELECTRON_DEBUG === 'vsc
 
 let mainWindow: Electron.BrowserWindow | null;
 
+//yay i commited to olis mega repository
+
 const createWindow = () => {
     // Create the browser window.
     mainWindow = new BrowserWindow({
