@@ -2,10 +2,12 @@ import 'phaser';
 import { Player } from '../entities/player';
 import keyboardBindings from '../keyboardBindings';
 import * as Fire from '../emitters/fire';
+import { Emitter } from '../emitters/fire';
 
 export default class MainScene extends Phaser.Scene {
     public image!: Phaser.GameObjects.Image;
     public player!: Player;
+    public emitter!: Emitter;
 
     constructor() {
         super({ key: 'MainScene' });
@@ -20,7 +22,6 @@ export default class MainScene extends Phaser.Scene {
     public create = () => {
         this.player.create();
         keyboardBindings(this);
-        Fire.create(this);
     }
 
     public update = (t: number, dt: number) => {

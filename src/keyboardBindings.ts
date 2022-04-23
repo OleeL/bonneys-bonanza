@@ -38,7 +38,7 @@ export const checkDirection = (entity: Entity, movement: IMovementSettings, t: n
 export default (scene: MainScene) => {
 
     scene.input.on('pointerdown', (event: Phaser.Input.Pointer) => {
-
+        scene.player.onPointerDown(event);
     });
     scene.input.on('pointermove', (event: Phaser.Input.Pointer) => {
         scene.player.onMouseMove(event);

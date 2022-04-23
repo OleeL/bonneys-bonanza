@@ -3,6 +3,7 @@ import { Crosshair } from '../hud/crosshair';
 import Wizard from '../assets';
 import { checkDirection, IMovementSettings } from '../keyboardBindings';
 import { Entity } from './entity';
+import { Emitter } from '../emitters/fire';
 
 const nameof = <T>(name: Extract<keyof T, string>): string => name;
 
@@ -59,6 +60,9 @@ const Movement: IMovementSettings[] = [
 export class Player extends Entity {
     private crosshair!: Crosshair;
     public sprite!: Phaser.GameObjects.Image;
+    public projectiles: Emitter[] = [];
+
+
     public get interval(): number {
         return this._interval;
     }
@@ -109,8 +113,14 @@ export class Player extends Entity {
         this.crosshair.onMouseMove(event);
     }
 
+    public onPointerDown = (event: Phaser.Input.Pointer) => {
+        this.projectiles.push(new Emitter(this.scene, this.sprite, event))
+    }
+
     public update = (t: number, dt: number) => {
         // Check if every key that has been added to movement has been pressed.
         Movement.forEach(direction => checkDirection(this, direction, t, dt));
+        this.projectiles.forEach(x => x.update(t, dt));
+
     }
 }
