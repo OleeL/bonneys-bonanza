@@ -4,6 +4,7 @@ import Wizard from '../assets';
 import { checkDirection, IMovementSettings } from '../keyboardBindings';
 import { Entity } from './entity';
 import { Emitter } from '../emitters/fire';
+import KeyCodes = Phaser.Input.Keyboard.KeyCodes;
 
 const nameof = <T>(name: Extract<keyof T, string>): string => name;
 
@@ -12,48 +13,44 @@ const Movement: IMovementSettings[] = [
     {
         Name: "Sprint",
         isDown: true,
-        Keys: [Phaser.Input.Keyboard.KeyCodes.SHIFT],
+        Keys: [KeyCodes.SHIFT],
         Textures: [],
-        Math: (player, t, dt) => {
-            (player as Player).setSprint();
-        }
+        Math: (player, t, dt) => (player as Player).setSprint(),
     },
     {
         Name: "Sprint",
         isDown: false,
-        Keys: [Phaser.Input.Keyboard.KeyCodes.SHIFT],
+        Keys: [KeyCodes.SHIFT],
         Textures: [],
-        Math: (player, t, dt) => {
-            (player as Player).setWalk();
-        }
+        Math: (player, t, dt) => (player as Player).setWalk(),
     },
     {
         Name: "Down",
         isDown: true,
-        Keys: [Phaser.Input.Keyboard.KeyCodes.S, Phaser.Input.Keyboard.KeyCodes.DOWN],
+        Keys: [KeyCodes.S, KeyCodes.DOWN],
         Textures: [Wizard.Down],
-        Math: (player, t, dt) => player.sprite.y += player.velocity * dt
+        Math: (player, t, dt) => player.sprite.y += player.velocity * dt,
     },
     {
         Name: "Left",
         isDown: true,
-        Keys: [Phaser.Input.Keyboard.KeyCodes.A, Phaser.Input.Keyboard.KeyCodes.LEFT],
+        Keys: [KeyCodes.A, KeyCodes.LEFT],
         Textures: [Wizard.Left, Wizard.LeftAlt],
-        Math: (player, t, dt) => player.sprite.x -= player.velocity * dt
+        Math: (player, t, dt) => player.sprite.x -= player.velocity * dt,
     },
     {
         Name: "Right",
         isDown: true,
-        Keys: [Phaser.Input.Keyboard.KeyCodes.D, Phaser.Input.Keyboard.KeyCodes.RIGHT],
+        Keys: [KeyCodes.D, KeyCodes.RIGHT],
         Textures: [Wizard.Right, Wizard.RightAlt],
-        Math: (player, t, dt) => player.sprite.x += player.velocity * dt
+        Math: (player, t, dt) => player.sprite.x += player.velocity * dt,
     },
     {
         Name: "Up",
         isDown: true,
-        Keys: [Phaser.Input.Keyboard.KeyCodes.W, Phaser.Input.Keyboard.KeyCodes.UP],
+        Keys: [KeyCodes.W, KeyCodes.UP],
         Textures: [Wizard.Up],
-        Math: (player, t, dt) => player.sprite.y -= player.velocity * dt
+        Math: (player, t, dt) => player.sprite.y -= player.velocity * dt,
     },
 ]
 
