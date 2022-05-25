@@ -31,7 +31,7 @@
 	"devDependencies": {
 		"@babel/core": "^7.17.9",
 		"@babel/plugin-proposal-class-properties": "^7.16.7",
-		"@parcel/transformer-sass": "2.5.0",
+		"@parcel/transformer-sass": "2.6.0",
 		"@types/node": "^17.0.23",
 		"cross-env": "^7.0.3",
 		"download-cli": "^1.1.1",
